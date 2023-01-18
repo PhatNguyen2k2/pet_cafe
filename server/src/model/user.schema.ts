@@ -13,6 +13,8 @@ export class User {
   password: string;
   @Prop({ required: true })
   address: string;
+  @Prop({ default: false })
+  isAdmin: boolean;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Basket' })
   drink_basket: Basket;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Basket' })

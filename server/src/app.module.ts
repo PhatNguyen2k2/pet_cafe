@@ -10,11 +10,15 @@ import { JwtModule } from '@nestjs/jwt';
 import { secret } from './utils/constants';
 import { join } from 'path';
 import { isAuthenticated } from './app.middleware';
+import { DrinkController } from './controller/drink.controller';
+import { DrinkService } from './service/drink.service';
+import { Drink, DrinkSchema } from './model/drink.chema';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/Pet_Cafe'),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: Drink.name, schema: DrinkSchema }]),
     JwtModule.register({
       secret,
       signOptions: { expiresIn: '2h' },
@@ -23,8 +27,8 @@ import { isAuthenticated } from './app.middleware';
       rootPath: join(__dirname, '..', 'public'),
     }),
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, UserService],
+  controllers: [AppController, UserController, DrinkController],
+  providers: [AppService, UserService, DrinkService],
 })
 export class AppModule {
   // configure(consumer: MiddlewareConsumer) {

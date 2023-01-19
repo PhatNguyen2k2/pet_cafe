@@ -4,14 +4,14 @@ import { Model } from 'mongoose';
 import { Drink, DrinkDocument } from '../model/drink.chema';
 
 @Injectable()
-export class DrinnkService {
+export class DrinkService {
   constructor(
     @InjectModel(Drink.name) private drinkModel: Model<DrinkDocument>,
   ) {}
 
-  async detail(id: string): Promise<any> {
+  async detail(id: any): Promise<any> {
     if (id) {
-      return await this.drinkModel.findById(id).exec();
+      return await this.drinkModel.findById(id.id).exec();
     } else return new HttpException('Can not find', HttpStatus.NOT_FOUND);
   }
 

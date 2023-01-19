@@ -39,3 +39,15 @@ export class isAuthenticated implements NestMiddleware {
     }
   }
 }
+
+@Injectable()
+export class adminAuthenticated implements NestMiddleware {
+  constructor(private readonly userService: UserService) {}
+  async use(req: any, res: any, next: NextFunction) {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      throw new HttpException('Not admin', HttpStatus.UNAUTHORIZED);
+    }
+  }
+}

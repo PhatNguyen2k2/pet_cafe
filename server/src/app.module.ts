@@ -8,7 +8,7 @@ import { User, UserSchema } from './model/user.schema';
 import { UserService } from './service/user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { secret } from './utils/constants';
-import { join } from 'path/posix';
+import { join } from 'path';
 import { isAuthenticated } from './app.middleware';
 
 @Module({

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { Basket } from './basket.chema';
+import { Basket } from './basket';
 
 export type UserDocument = User & Document;
 @Schema()

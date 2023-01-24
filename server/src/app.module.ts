@@ -29,7 +29,7 @@ import { memoryStorage } from 'multer';
       signOptions: { expiresIn: '2h' },
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(__dirname, '..', 'src/public'),
     }),
   ],
   controllers: [AppController, UserController, DrinkController],

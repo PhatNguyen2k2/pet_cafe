@@ -42,4 +42,14 @@ export class DrinkController {
     const newDrink = await this.drinkService.createDrink(requestBody);
     return res.status(HttpStatus.CREATED).json({ newDrink });
   }
+  @Put('/:id')
+  async update(@Res() res: any, @Param('id') id: string, @Body() drink: Drink) {
+    const updatedDrink = await this.drinkService.updateDrink(id, drink);
+    return res.status(HttpStatus.OK).json(updatedDrink);
+  }
+  @Delete('/:id')
+  async delete(@Res() res: any, @Param('id') id: string) {
+    await this.drinkService.deleteDrink(id);
+    return res.status(HttpStatus.OK);
+  }
 }

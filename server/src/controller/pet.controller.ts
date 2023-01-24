@@ -42,4 +42,14 @@ export class PetController {
     const newPet = await this.petService.createPet(requestBody);
     return res.status(HttpStatus.CREATED).json({ newPet });
   }
+  @Put('/:id')
+  async update(@Res() res: any, @Param('id') id: string, @Body() pet: Pet) {
+    const updatedPet = await this.petService.updatePet(id, pet);
+    return res.status(HttpStatus.OK).json(updatedPet);
+  }
+  @Delete('/:id')
+  async delete(@Res() res: any, @Param('id') id: string) {
+    await this.petService.deletePet(id);
+    return res.status(HttpStatus.OK);
+  }
 }

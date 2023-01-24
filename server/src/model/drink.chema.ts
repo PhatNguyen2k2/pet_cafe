@@ -8,7 +8,7 @@ export class Drink {
   type: string;
   @Prop({ required: true })
   price: number;
-  @Prop({ required: false })
+  @Prop({ required: true })
   image: string;
   @Prop({ default: Date.now() })
   createdDate: Date;

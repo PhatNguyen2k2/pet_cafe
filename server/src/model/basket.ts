@@ -10,7 +10,7 @@ export class Basket {
   price: number;
   @Prop({ required: true, default: 0 })
   buy_amount: number;
-  @Prop({ default: Date.now(), index: { expires: '3h' } })
-  at: Date;
+  @Prop({ required: false, default: Date.now, index: { expires: '3h' } })
+  at: number;
 }
 export const BasketSchema = SchemaFactory.createForClass(Basket);

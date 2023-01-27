@@ -56,7 +56,15 @@ export class UserService {
   }
 
   async basketAdd(id: string, quantity: any, user: Object): Promise<Basket> {
-    const d = await this.ProductModel.findById(id);
+    let d: any;
+    try {
+      d = await this.ProductModel.findById(id);
+    } catch (e) {
+      throw new HttpException(
+        'this product is not exist',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const u = new this.userModel(user);
     let basket = await this.basketModel.findById(u._id);
     const newItem = {

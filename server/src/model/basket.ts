@@ -4,7 +4,7 @@ export type BasketDocument = Basket & Document;
 export class Basket {
   @Prop({ required: true })
   _id: string;
-  @Prop({ required: true })
+  @Prop({ required: true, default: [] })
   items: [
     {
       id: string;

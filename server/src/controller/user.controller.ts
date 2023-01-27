@@ -40,9 +40,15 @@ export class UserController {
     @Res() res: any,
     @Req() req: any,
     @Param('id') id: string,
-    @Body() num: number,
+    @Body() quantity: any,
   ) {
-    await this.userServerice.basketAdd(id, num, req.user);
-    return res.status(HttpStatus.OK);
+    const newBasket = await this.userServerice.basketAdd(
+      id,
+      quantity,
+      req.user,
+    );
+    return res.status(HttpStatus.OK).json({
+      newBasket,
+    });
   }
 }

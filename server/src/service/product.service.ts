@@ -60,4 +60,5 @@ export class ProductService {
       toStream(file.buffer).pipe(upload);
     });
   }
+  
 }

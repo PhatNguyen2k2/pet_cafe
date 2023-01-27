@@ -55,11 +55,39 @@ export class UserService {
     return await this.userModel.findOne({ email }).exec();
   }
 
-  async basketAdd(id: string, buyAmount: number, user: Object): Promise<any> {
+  async basketAdd(id: string, quantity: any, user: Object): Promise<Basket> {
     const d = await this.ProductModel.findById(id);
     const u = new this.userModel(user);
-    
-    u.save();
-    return HttpStatus.OK;
+    let basket = await this.basketModel.findById(u._id);
+    const newItem = {
+      id: id,
+      name: d.name,
+      price: d.price,
+      quantity: quantity.num,
+    };
+    if (basket) {
+      let flag = basket.items.some((item) => item.id === id);
+      flag
+        ? basket.items.forEach((item) => {
+            if (item.id === id) item.quantity += newItem.quantity;
+          })
+        : basket.items.push(newItem);
+      let sum = 0;
+      basket.items.forEach((item) => {
+        sum += item.quantity * item.price;
+      });
+      basket.total = sum;
+      basket.markModified('items');
+      basket.markModified('total');
+    } else {
+      const newBasket = {
+        _id: u._id.toString(),
+        items: [],
+        total: newItem.quantity * newItem.price,
+      };
+      newBasket.items.push(newItem);
+      basket = new this.basketModel(newBasket);
+    }
+    return basket.save();
   }
 }

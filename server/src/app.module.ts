@@ -6,21 +6,23 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { UserController } from './controller/user.controller';
 import { User, UserSchema } from './model/user.schema';
 import { UserService } from './service/user.service';
-import { DrinkController } from './controller/drink.controller';
-import { DrinkService } from './service/drink.service';
-import { Drink, DrinkSchema } from './model/drink.chema';
+import { ProductController } from './controller/product.controller';
+import { ProductService } from './service/product.service';
+import { Product, ProductSchema } from './model/product.chema';
 import { JwtModule } from '@nestjs/jwt';
 import { secret } from './utils/constants';
 import { join } from 'path';
 import { isAuthenticated } from './app.middleware';
 import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
+import { Basket, BasketSchema } from './model/basket';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/Pet_Cafe'),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    MongooseModule.forFeature([{ name: Drink.name, schema: DrinkSchema }]),
+    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
+    MongooseModule.forFeature([{ name: Basket.name, schema: BasketSchema }]),
     MulterModule.register({
       storage: memoryStorage(),
     }),
@@ -32,16 +34,14 @@ import { memoryStorage } from 'multer';
       rootPath: join(__dirname, '..', 'src/public'),
     }),
   ],
-  controllers: [AppController, UserController, DrinkController],
-  providers: [AppService, UserService, DrinkService],
+  controllers: [AppController, UserController, ProductController],
+  providers: [AppService, UserService, ProductService],
 })
 export class AppModule {
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer
-  //     .apply(isAuthenticated)
-  //     .exclude(
-  //       { path: 'api/v1/video/:id', method: RequestMethod.GET }
-  //     )
-  //     .forRoutes(...);
-  // }
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(isAuthenticated).forRoutes({
+      path: 'api/user/addBasket/:id',
+      method: RequestMethod.POST,
+    });
+  }
 }

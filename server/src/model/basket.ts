@@ -5,12 +5,17 @@ export class Basket {
   @Prop({ required: true })
   _id: string;
   @Prop({ required: true })
-  name: string;
-  @Prop({ required: true })
-  price: number;
-  @Prop({ required: true, default: 0 })
-  buy_amount: number;
-  @Prop({ required: false, default: Date.now, index: { expires: '3h' } })
-  at: number;
+  items: [
+    {
+      id: string;
+      name: string;
+      price: number;
+      quantity: number;
+    },
+  ];
+  @Prop({ required: false, default: 0 })
+  total: number;
+  @Prop({ default: Date.now() })
+  createdAt: Date;
 }
 export const BasketSchema = SchemaFactory.createForClass(Basket);

@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Pet, PetDocument } from '../model/pet.schema';
+import { Product, ProductDocument } from '../model/product.chema';
 import { UploadApiErrorResponse, UploadApiResponse, v2 } from 'cloudinary';
 import { Readable } from 'stream';
 import toStream from 'buffer-to-stream';
@@ -12,26 +12,28 @@ import {
 } from '../utils/constants';
 
 @Injectable()
-export class PetService {
-  constructor(@InjectModel(Pet.name) private petModel: Model<PetDocument>) {}
+export class ProductService {
+  constructor(
+    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
+  ) {}
 
   async detail(id: any): Promise<any> {
     if (id.id) {
-      return await this.petModel.findById(id.id).exec();
+      return await this.productModel.findById(id.id).exec();
     } else return new HttpException('Can not find', HttpStatus.NOT_FOUND);
   }
 
-  async createPet(pet: Object): Promise<Pet> {
-    const newPet = new this.petModel(pet);
-    return newPet.save();
+  async createProduct(product: Object): Promise<Product> {
+    const newProduct = new this.productModel(product);
+    return newProduct.save();
   }
 
-  async updatePet(id: string, pet: Object): Promise<Pet> {
-    return this.petModel.findByIdAndUpdate(id, pet, { new: true });
+  async updateProduct(id: string, product: Object): Promise<Product> {
+    return this.productModel.findByIdAndUpdate(id, product, { new: true });
   }
 
-  async deletePet(id: string): Promise<any> {
-    return this.petModel.findByIdAndRemove(id);
+  async deleteProduct(id: string): Promise<any> {
+    return this.productModel.findByIdAndRemove(id);
   }
 
   async uploadImage(

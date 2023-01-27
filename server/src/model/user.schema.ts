@@ -1,7 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
-import { Basket } from './basket';
-import { Bill } from './bill.schema';
 
 export type UserDocument = User & Document;
 @Schema()
@@ -16,12 +13,6 @@ export class User {
   address: string;
   @Prop({ default: false })
   isAdmin: boolean;
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Basket' })
-  drink_basket: [Basket];
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Basket' })
-  pet_basket: [Basket];
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Bill' })
-  bill: [Bill];
   @Prop({ default: Date.now() })
   createdDate: Date;
 }

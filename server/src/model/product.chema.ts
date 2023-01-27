@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-export type DrinkDocument = Drink & Document;
+export type ProductDocument = Product & Document;
 @Schema()
-export class Drink {
+export class Product {
   @Prop({ required: true })
   name: string;
   @Prop({ required: true })
@@ -13,4 +13,4 @@ export class Drink {
   @Prop({ default: Date.now() })
   createdDate: Date;
 }
-export const DrinkSchema = SchemaFactory.createForClass(Drink);
+export const ProductSchema = SchemaFactory.createForClass(Product);

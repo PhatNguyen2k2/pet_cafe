@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-function BasicExample() {
+const SignUp = () => {
   const [passwordShow, setPasswordShow] = useState(false);
   let navigate = useNavigate();
   const togglePassword = () => {
@@ -58,6 +58,6 @@ function BasicExample() {
       </Button>
     </Form>
   );
-}
+};
 
-export default BasicExample;
+export default SignUp;

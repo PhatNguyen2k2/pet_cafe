@@ -80,11 +80,7 @@ export class UserService {
             if (item.id === id) item.quantity += newItem.quantity;
           })
         : basket.items.push(newItem);
-      let sum = 0;
-      basket.items.forEach((item) => {
-        sum += item.quantity * item.price;
-      });
-      basket.total = sum;
+      basket.total += newItem.quantity * newItem.price;
       basket.markModified('items');
       basket.markModified('total');
     } else {

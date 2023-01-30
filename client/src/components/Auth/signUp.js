@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
 import styles from './signUp.scss';
 
 const SignUp = () => {
@@ -20,7 +21,16 @@ const SignUp = () => {
       address: data.get('address'),
       password: data.get('password'),
     };
-    await axios.post('http://localhost:8000/api/user/signup', form);
+    const res = await axios.post('http://localhost:8000/api/user/signup', form);
+    if (res.status === 201) {
+      <Alert key={primary} variant={primary}>
+        Tạo tài khoản thành công
+      </Alert>;
+    } else {
+      <Alert key={warning} variant={warning}>
+        Tài khoản đã tồn tại, hãy đăng nhập
+      </Alert>;
+    }
     navigate('/');
   };
   return (

@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { get, Model } from 'mongoose';
 import { User, UserDocument } from '../model/user.schema';
 import { Basket, BasketDocument } from '../model/basket';
 import { Product, ProductDocument } from '../model/product.chema';
@@ -16,6 +16,10 @@ export class UserService {
   ) {}
 
   async signup(user: User): Promise<User> {
+    const checkUser = await this.getOne(user.email);
+    if (checkUser) {
+      throw new HttpException('exist', HttpStatus.NOT_ACCEPTABLE);
+    }
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(user.password, salt);
     const reqBody = {

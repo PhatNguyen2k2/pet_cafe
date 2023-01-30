@@ -21,7 +21,10 @@ const SignUp = () => {
       address: data.get('address'),
       password: data.get('password'),
     };
-    const res = await axios.post('http://localhost:8000/api/user/signup', form);
+    const { res } = await axios.post(
+      'http://localhost:8000/api/user/signup',
+      form,
+    );
     if (res.status === 201) {
       <Alert key={primary} variant={primary}>
         Tạo tài khoản thành công

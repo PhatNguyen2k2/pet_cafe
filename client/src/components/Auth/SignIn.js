@@ -1,14 +1,19 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../redux/slice/userSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
 
-const SignIn = () => {
-  const { setIsLoggedIn } = props;
-  const [errrorMessage, setErrorMessage] = React.useState('');
+const SignIn = (props) => {
   let navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const [passwordShow, setPasswordShow] = useState(false);
+  const togglePassword = () => {
+    setPasswordShow(!passwordShow);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -21,10 +26,12 @@ const SignIn = () => {
       form,
     );
     if (data.status === parseInt('401')) {
-      setErrorMessage(data.response);
+      <Alert key={'warning'} variant={'warning'}>
+        Tài khoản không tồn tại
+      </Alert>;
     } else {
       localStorage.setItem('token', data.token);
-      setIsLoggedIn(true);
+      dispatch(userActions.setUser(data));
       navigate('/');
     }
   };
@@ -64,6 +71,9 @@ const SignIn = () => {
           Đăng nhập
         </Button>
       </Form>
+      <Link to="/signup">
+        <p className="text-center pt-[20px] text-gray">Chưa có tài khoản ?</p>
+      </Link>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import styles from './signUp.scss';
@@ -26,15 +26,15 @@ const SignUp = () => {
       form,
     );
     if (res.status === 201) {
-      <Alert key={primary} variant={primary}>
+      <Alert key={'primary'} variant={'primary'}>
         Tạo tài khoản thành công
       </Alert>;
     } else {
-      <Alert key={warning} variant={warning}>
+      <Alert key={'warning'} variant={'warning'}>
         Tài khoản đã tồn tại, hãy đăng nhập
       </Alert>;
     }
-    navigate('/');
+    navigate('/signin');
   };
   return (
     <>
@@ -95,6 +95,9 @@ const SignUp = () => {
           Đăng kí
         </Button>
       </Form>
+      <Link to="/signin">
+        <p className="text-center pt-[20px] text-gray">Đăng nhập</p>
+      </Link>
     </>
   );
 };

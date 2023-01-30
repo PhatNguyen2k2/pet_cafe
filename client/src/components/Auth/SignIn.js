@@ -6,8 +6,9 @@ import { userActions } from '../../redux/slice/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
+import styles from './sign.scss';
 
-const SignIn = (props) => {
+const SignIn = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const [passwordShow, setPasswordShow] = useState(false);

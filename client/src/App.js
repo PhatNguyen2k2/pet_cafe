@@ -10,7 +10,7 @@ const ViewAuth = React.lazy(() => import('./pages/viewAuth'));
 
 function App() {
   const dispatch = useDispatch();
-  const userIsLoggedIn = useSelector($userIsLoggedIn);
+  // const userIsLoggedIn = useSelector($userIsLoggedIn);
   return (
     <>
       <Suspense fallback={<Loading />}>

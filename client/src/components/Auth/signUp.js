@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
-import styles from './signUp.scss';
+import styles from './sign.scss';
 
 const SignUp = () => {
   const [passwordShow, setPasswordShow] = useState(false);

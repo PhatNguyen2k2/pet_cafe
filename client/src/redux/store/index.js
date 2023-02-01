@@ -21,7 +21,7 @@ const rootReducer = combineReducers({ user: userReducer });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: { petCafe: persistedReducer },
+  reducer: { persistedReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

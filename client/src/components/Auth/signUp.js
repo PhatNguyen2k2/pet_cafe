@@ -37,7 +37,7 @@ const SignUp = () => {
     navigate('/signin');
   };
   return (
-    <>
+    <div id="body">
       <Form onSubmit={handleSubmit}>
         <h1>Đăng kí tài khoản</h1>
         <Form.Group className="mb-3" id="fname">
@@ -98,7 +98,7 @@ const SignUp = () => {
       <Link to="/signin">
         <p className="text-center pt-[20px] text-gray">Đăng nhập</p>
       </Link>
-    </>
+    </div>
   );
 };
 

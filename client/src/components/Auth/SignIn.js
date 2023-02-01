@@ -28,7 +28,7 @@ const SignIn = () => {
     );
     if (data.status === parseInt('401')) {
       <Alert key={'warning'} variant={'warning'}>
-        Tài khoản không tồn tại
+        Sai mật khẩu hoặc email
       </Alert>;
     } else {
       localStorage.setItem('token', data.token);
@@ -37,7 +37,7 @@ const SignIn = () => {
     }
   };
   return (
-    <>
+    <div id="body">
       <Form onSubmit={handleSubmit}>
         <h1>Đăng nhập</h1>
         <Form.Group className="mb-3" id="email">
@@ -75,7 +75,7 @@ const SignIn = () => {
       <Link to="/signup">
         <p className="text-center pt-[20px] text-gray">Chưa có tài khoản ?</p>
       </Link>
-    </>
+    </div>
   );
 };
 

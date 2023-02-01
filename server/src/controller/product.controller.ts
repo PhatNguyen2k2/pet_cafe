@@ -43,7 +43,11 @@ export class ProductController {
     return res.status(HttpStatus.CREATED).json({ newProduct });
   }
   @Put('/:id')
-  async update(@Res() res: any, @Param('id') id: string, @Body() product: Product) {
+  async update(
+    @Res() res: any,
+    @Param('id') id: string,
+    @Body() product: Product,
+  ) {
     const updatedProduct = await this.productService.updateProduct(id, product);
     return res.status(HttpStatus.OK).json(updatedProduct);
   }
@@ -51,5 +55,17 @@ export class ProductController {
   async delete(@Res() res: any, @Param('id') id: string) {
     await this.productService.deleteProduct(id);
     return res.status(HttpStatus.OK);
+  }
+  @Get('/drink/new')
+  async newDrink(@Res() res: any) {
+    const type = 'drink';
+    const newDrink = await this.productService.newProduct(type);
+    return res.status(HttpStatus.OK).json(newDrink);
+  }
+  @Get('/pet/new')
+  async newPet(@Res() res: any) {
+    const type = 'pet';
+    const newPet = await this.productService.newProduct(type);
+    return res.status(HttpStatus.OK).json(newPet);
   }
 }

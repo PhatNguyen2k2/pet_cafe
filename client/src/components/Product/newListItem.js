@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardItem from './cardItem';
+import styles from './newListItem.scss';
 
 const NewListItem = (props) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if (props.data) {
+      setData(props.data);
+    }
+  }, [props.data]);
   return (
     <>
-      <Row xs={1} md={5} className="g-4">
-        {props.map((item) => {
-          <CardItem {...item} />;
-        })}
-      </Row>
+      <div className="listProduct">
+        {data.map((item) => (
+          <CardItem data={item} />
+        ))}
+      </div>
     </>
   );
 };

@@ -60,5 +60,21 @@ export class ProductService {
       toStream(file.buffer).pipe(upload);
     });
   }
-  
+  async newProduct(type: string): Promise<any> {
+    if (type === 'pet') {
+      return this.productModel
+        .find({
+          type: { $in: ['dog', 'cat'] },
+        })
+        .sort({ createdDate: 1 })
+        .limit(5);
+    } else {
+      return this.productModel
+        .find({
+          type: { $nin: ['dog', 'cat'] },
+        })
+        .sort({ createdDate: 1 })
+        .limit(5);
+    }
+  }
 }

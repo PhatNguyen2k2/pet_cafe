@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { $userIsLoggedIn } from './redux/selector';
 
+const ViewHome = React.lazy(() => import('./pages/viewHome'));
 const ViewAuth = React.lazy(() => import('./pages/viewAuth'));
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/signup" element={<ViewAuth type="signup" />} />
           <Route path="/signin" element={<ViewAuth type="signin" />} />
+          <Route path="/" element={<ViewHome />} />
         </Routes>
       </Suspense>
     </>

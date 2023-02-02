@@ -10,7 +10,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { $userIsLoggedIn, $userSelector } from '../../redux/selector';
 import { userActions } from '../../redux/slice/userSlice';
-import styles from './header.scss';
+import './header.scss';
 
 const Header = () => {
   const [searchInput, setSearchInput] = useState('');

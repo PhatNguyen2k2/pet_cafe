@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import styles from './cardItem.scss';
+import './cardItem.scss';
 
 const CardItem = (props) => {
   const [data, setData] = useState({});

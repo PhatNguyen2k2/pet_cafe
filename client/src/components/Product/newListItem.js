@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CardItem from './cardItem';
-import styles from './newListItem.scss';
+import './newListItem.scss';
 
 const NewListItem = (props) => {
   const [data, setData] = useState([]);

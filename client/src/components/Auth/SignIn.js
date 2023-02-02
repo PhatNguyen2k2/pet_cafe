@@ -6,7 +6,7 @@ import { userActions } from '../../redux/slice/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
-import styles from './sign.scss';
+import './sign.scss';
 
 const SignIn = () => {
   let navigate = useNavigate();

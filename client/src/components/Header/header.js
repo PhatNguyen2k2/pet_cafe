@@ -36,7 +36,7 @@ const Header = () => {
     navigate('/search?q=' + searchInput);
   };
   return (
-    <>
+    <Container>
       <Navbar id="navbar" bg="light" expand="lg">
         <Container fluid>
           <Navbar.Brand id="logo" href="/">
@@ -111,7 +111,7 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </>
+    </Container>
   );
 };
 

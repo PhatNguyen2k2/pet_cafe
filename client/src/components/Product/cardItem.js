@@ -25,15 +25,3 @@ const CardItem = (props) => {
 };
 
 export default CardItem;
-{
-  /* <Card style={{ width: '13rem' }}>
-            <Card.Img variant="top" src={data.image} />
-            <Card.Body>
-              <Card.Title>{data.name}</Card.Title>
-              <Card.Text>{data.price}</Card.Text>
-              <Button variant="primary" href="/">
-                Detail
-              </Button>
-            </Card.Body>
-          </Card> */
-}

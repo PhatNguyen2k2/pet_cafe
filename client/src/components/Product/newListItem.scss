@@ -1,15 +1,5 @@
 .listProduct {
-  display: flex;
-  gap: 10px;
-  max-width: 1600px;
   background-color: whitesmoke;
   border-radius: 2%;
   padding: 0.8%;
-}
-@media screen and (max-width: 600px) {
-  .listProduct {
-    width: 50%;
-    display: block;
-    margin-bottom: 20px;
-  }
 }

@@ -20,9 +20,7 @@ const ViewHome = () => {
     <>
       <Header />
       <Banner />
-      <h2>Our new drink</h2>
       <NewListItem data={drinkdata} />
-      <h2>Our new pet</h2>
       <NewListItem data={petdata} />
     </>
   );

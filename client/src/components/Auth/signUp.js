@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
 import './sign.scss';
 
@@ -37,7 +38,7 @@ const SignUp = () => {
     navigate('/signin');
   };
   return (
-    <div id="body">
+    <Container id="body">
       <Form onSubmit={handleSubmit}>
         <h1>Đăng kí tài khoản</h1>
         <Form.Group className="mb-3" id="fname">
@@ -98,7 +99,7 @@ const SignUp = () => {
       <Link to="/signin">
         <p className="text-center pt-[20px] text-gray">Đăng nhập</p>
       </Link>
-    </div>
+    </Container>
   );
 };
 

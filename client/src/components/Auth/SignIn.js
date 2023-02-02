@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { userActions } from '../../redux/slice/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
 import { useState } from 'react';
 import './sign.scss';
 
@@ -37,7 +38,7 @@ const SignIn = () => {
     }
   };
   return (
-    <div id="body">
+    <Container id="body">
       <Form onSubmit={handleSubmit}>
         <h1>Đăng nhập</h1>
         <Form.Group className="mb-3" id="email">
@@ -75,7 +76,7 @@ const SignIn = () => {
       <Link to="/signup">
         <p className="text-center pt-[20px] text-gray">Chưa có tài khoản ?</p>
       </Link>
-    </div>
+    </Container>
   );
 };
 

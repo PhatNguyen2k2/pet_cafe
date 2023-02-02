@@ -16,7 +16,6 @@ const NewListItem = (props) => {
       setDrink(false);
     }
   }, [props.data]);
-  console.log(data);
   return (
     <>
       <Container>

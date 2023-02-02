@@ -5,8 +5,8 @@ import Header from '../components/Header/header';
 import NewListItem from '../components/Product/newListItem';
 
 const ViewHome = () => {
-  const [drinkdata, setDrinkdata] = useState(null);
-  const [petdata, setPetdata] = useState(null);
+  const [drinkdata, setDrinkdata] = useState([]);
+  const [petdata, setPetdata] = useState([]);
   async function getData() {
     const res1 = await axios.get('http://localhost:8000/api/product/drink/new');
     setDrinkdata(res1.data);
@@ -20,8 +20,8 @@ const ViewHome = () => {
     <>
       <Header />
       <Banner />
-      <NewListItem data={drinkdata} />
-      <NewListItem data={petdata} />
+      {drinkdata.length > 0 && <NewListItem data={drinkdata} />}
+      {petdata.length > 0 && <NewListItem data={petdata} />}
     </>
   );
 };

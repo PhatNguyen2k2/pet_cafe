@@ -16,9 +16,9 @@ function App() {
     <>
       <Suspense fallback={<Loading />}>
         <Routes>
+          <Route path="/" element={<ViewHome />} />
           <Route path="/signup" element={<ViewAuth type="signup" />} />
           <Route path="/signin" element={<ViewAuth type="signin" />} />
-          <Route path="/" element={<ViewHome />} />
         </Routes>
       </Suspense>
     </>

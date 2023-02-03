@@ -3,16 +3,12 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Loading from './components/Loading/loading';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { $userIsLoggedIn } from './redux/selector';
 
 const ViewHome = React.lazy(() => import('./pages/viewHome'));
 const ViewAuth = React.lazy(() => import('./pages/viewAuth'));
 const ViewDetail = React.lazy(() => import('./pages/viewDetail'));
 
 function App() {
-  const dispatch = useDispatch();
-  // const userIsLoggedIn = useSelector($userIsLoggedIn);
   return (
     <>
       <Suspense fallback={<Loading />}>

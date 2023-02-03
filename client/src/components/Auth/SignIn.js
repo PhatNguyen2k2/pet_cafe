@@ -29,7 +29,7 @@ const SignIn = () => {
     );
     if (data.status === parseInt('401')) {
       <Alert key={'warning'} variant={'warning'}>
-        Sai mật khẩu hoặc email
+        wrong password or email
       </Alert>;
     } else {
       localStorage.setItem('token', data.token);

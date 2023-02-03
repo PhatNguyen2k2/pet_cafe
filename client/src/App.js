@@ -8,6 +8,7 @@ import { $userIsLoggedIn } from './redux/selector';
 
 const ViewHome = React.lazy(() => import('./pages/viewHome'));
 const ViewAuth = React.lazy(() => import('./pages/viewAuth'));
+const ViewDetail = React.lazy(() => import('./pages/viewDetail'));
 
 function App() {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ function App() {
           <Route path="/" element={<ViewHome />} />
           <Route path="/signup" element={<ViewAuth type="signup" />} />
           <Route path="/signin" element={<ViewAuth type="signin" />} />
+          <Route path="/product/:productId" element={<ViewDetail />} />
+          <Route path="/loading" element={<Loading />} />
         </Routes>
       </Suspense>
     </>

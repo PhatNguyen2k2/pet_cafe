@@ -21,8 +21,8 @@ import { ProductService } from '../service/product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get()
-  async detail(@Query() id: string): Promise<Object> {
+  @Get('/:id')
+  async detail(@Param() id: string): Promise<Object> {
     return await this.productService.detail(id);
   }
   @Post('/create')

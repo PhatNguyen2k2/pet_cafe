@@ -1,0 +1,12 @@
+.row {
+  margin-top: 20px;
+  background-color: whitesmoke;
+  border-radius: 1%;
+  .imageCol {
+    text-align: center;
+    .image {
+      width: 300px;
+      height: 300px;
+    }
+  }
+}

@@ -16,7 +16,7 @@ const CardItem = (props) => {
       <Card.Body>
         <Card.Title>{data.name}</Card.Title>
         <Card.Text>{data.price}</Card.Text>
-        <Button variant="primary" href="/">
+        <Button variant="primary" href={'/product/' + data._id}>
           Detail
         </Button>
       </Card.Body>

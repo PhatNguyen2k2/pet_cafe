@@ -22,6 +22,11 @@ export class ProductService {
       return await this.productModel.findById(id.id).exec();
     } else return new HttpException('Can not find', HttpStatus.NOT_FOUND);
   }
+  async getProductByType(type: string): Promise<any> {
+    if (type) {
+      return await this.productModel.find({ type: type });
+    } else return new HttpException('Can not find', HttpStatus.NOT_FOUND);
+  }
 
   async createProduct(product: Object): Promise<Product> {
     const newProduct = new this.productModel(product);

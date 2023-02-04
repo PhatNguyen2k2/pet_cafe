@@ -68,4 +68,9 @@ export class ProductController {
     const newPet = await this.productService.newProduct(type);
     return res.status(HttpStatus.OK).json(newPet);
   }
+  @Get('/type/find')
+  async productType(@Query('type') type: any, @Res() res: any) {
+    const product = await this.productService.getProductByType(type);
+    return res.status(HttpStatus.OK).json(product);
+  }
 }

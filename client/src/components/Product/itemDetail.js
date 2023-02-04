@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/esm/Button';
 import Alert from 'react-bootstrap/Alert';
 import { useSelector } from 'react-redux';
 import { $userIsLoggedIn } from '../../redux/selector';
+import CardItem from './cardItem';
 const ItemDetail = () => {
   const isLoggedIn = useSelector($userIsLoggedIn);
   const { productId } = useParams();
@@ -21,9 +22,9 @@ const ItemDetail = () => {
     );
     setData(product.data);
     const products = await axios.get(
-      'http://localhost:8000/api/product/type/' + data.type,
+      'http://localhost:8000/api/product/type/find?type=' + data.type,
     );
-    setListProduct(products);
+    setListProduct(products.data);
   }
   const handleAlert = () => {
     setShowAlert(false);
@@ -53,8 +54,9 @@ const ItemDetail = () => {
   return (
     <Container>
       {showAlert && !isLoggedIn && (
-        <Alert key={'warning'} variant={'warning'} onClick={handleAlert}>
-          You need to login first (click to close this alert)
+        <Alert key={'warning'} variant={'warning'}>
+          You need to login first{' '}
+          <Alert.Link href="/signin">Sign in</Alert.Link>
         </Alert>
       )}
       {showAlert && isLoggedIn && (
@@ -81,6 +83,18 @@ const ItemDetail = () => {
           )}
         </Col>
       </Row>
+      {listProduct.length > 0 && (
+        <>
+          <h2>May be you like</h2>
+          <Row>
+            {listProduct.map((item) => (
+              <Col>
+                <CardItem data={item} />
+              </Col>
+            ))}
+          </Row>
+        </>
+      )}
     </Container>
   );
 };

@@ -13,23 +13,36 @@ const ItemDetail = () => {
   const isLoggedIn = useSelector($userIsLoggedIn);
   const { productId } = useParams();
   const [data, setData] = useState({});
+  const [listProduct, setListProduct] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   async function getProduct() {
     const product = await axios.get(
       'http://localhost:8000/api/product/' + productId,
     );
     setData(product.data);
+    const products = await axios.get(
+      'http://localhost:8000/api/product/type/' + data.type,
+    );
+    setListProduct(products);
   }
   const handleAlert = () => {
     setShowAlert(false);
   };
   async function addCart() {
+    setShowAlert(true);
     const token = localStorage.getItem('token');
-    await axios.post('http://localhost:8000/api/user/addBasket/' + data._id, {
-      headers: {
-        Authorization: 'Bearer ' + token,
+    await axios.post(
+      'http://localhost:8000/api/user/addBasket/' + data._id,
+      { num: 1 },
+      {
+        headers: {
+          Accept: '*/*',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ num: 1 }),
       },
-    });
+    );
   }
   const btnAlert = () => {
     setShowAlert(true);
@@ -41,12 +54,12 @@ const ItemDetail = () => {
     <Container>
       {showAlert && !isLoggedIn && (
         <Alert key={'warning'} variant={'warning'} onClick={handleAlert}>
-          You need to login first
+          You need to login first (click to close this alert)
         </Alert>
       )}
       {showAlert && isLoggedIn && (
         <Alert key={'primary'} variant={'primary'} onClick={handleAlert}>
-          Added success
+          Added success (click to close this alert)
         </Alert>
       )}
       <Row className="row">

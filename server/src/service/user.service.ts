@@ -41,6 +41,10 @@ export class UserService {
       if (bcrypt.compare(user.password, password)) {
         const payload = { email: user.email };
         return {
+          name: foundUser.fullname,
+          email: foundUser.email,
+          address: foundUser.address,
+          avatar: foundUser.avatar,
           token: jwt.sign(payload),
         };
       }

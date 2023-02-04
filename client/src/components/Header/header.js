@@ -15,14 +15,10 @@ import './header.scss';
 const Header = () => {
   const [searchInput, setSearchInput] = useState('');
   const [isOpenSearchBox, setIsOpenSearchBox] = useState(false);
-  const [isShowUserInfo, setIsShowUserInfo] = useState(false);
   const user = useSelector($userSelector);
   const dispatch = useDispatch();
   const isLoggedIn = useSelector($userIsLoggedIn);
   const navigate = useNavigate();
-  const buttonSearchClickHandler = () => {
-    setIsOpenSearchBox(!isOpenSearchBox);
-  };
   const logoutHandler = async () => {
     setTimeout(async () => {
       //   await logoutUser();
@@ -68,7 +64,7 @@ const Header = () => {
           <Nav id="nav">
             <Nav.Link to="/basket">
               <img
-                id="basket"
+                className="image"
                 src="https://res.cloudinary.com/da5yv096f/image/upload/v1675176667/icons8-shopping-cart_kro61k.gif"
                 alt="basket"
               />
@@ -76,8 +72,9 @@ const Header = () => {
             <NavDropdown
               title={
                 <img
+                  className="image"
                   src={
-                    user && user.avatar
+                    isLoggedIn
                       ? user.avatar
                       : 'https://wordpress.iqonic.design/product/wp/streamit/wp-content/themes/streamit-theme/assets/images/redux/user.png'
                   }

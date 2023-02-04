@@ -13,6 +13,11 @@ export class User {
   address: string;
   @Prop({ default: false })
   isAdmin: boolean;
+  @Prop({
+    default:
+      'https://res.cloudinary.com/da5yv096f/image/upload/v1675437152/icons8-cat-head_y9nmtv.gif',
+  })
+  avatar: string;
   @Prop({ default: Date.now() })
   createdDate: Date;
 }

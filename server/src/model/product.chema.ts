@@ -14,3 +14,4 @@ export class Product {
   createdDate: Date;
 }
 export const ProductSchema = SchemaFactory.createForClass(Product);
+ProductSchema.index({ name: 'text', type: 'text' });

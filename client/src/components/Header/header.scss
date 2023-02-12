@@ -1,8 +1,8 @@
 #navbar {
   #logo {
     #image {
-      width: 40px;
-      height: 50px;
+      width: 100%;
+      height: 10vh;
     }
   }
   .navlink {
@@ -10,9 +10,24 @@
     font-weight: bold;
   }
   #nav {
-    .image {
-      width: 40px;
-      height: 40px;
+    .cart {
+      position: relative;
+      .image {
+        width: 40px;
+        height: 40px;
+      }
+      #numProduct {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 9px;
+        height: 23.5px;
+        border-radius: 35%;
+        background-color: red;
+        font-weight: bold;
+        text-align: center;
+        color: white;
+      }
     }
   }
 }

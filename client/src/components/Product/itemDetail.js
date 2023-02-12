@@ -65,7 +65,7 @@ const ItemDetail = () => {
         </Alert>
       )}
       <Row className="row">
-        <Col className="imageCol">
+        <Col sm className="imageCol">
           <img className="image" src={data.image} alt={data.name} />
         </Col>
         <Col>

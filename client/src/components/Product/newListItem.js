@@ -25,7 +25,7 @@ const NewListItem = (props) => {
           <Row>
             {data.map((item) => (
               <Col>
-                <CardItem data={item} />
+                <CardItem data={item} key={item._id} />
               </Col>
             ))}
           </Row>

@@ -25,7 +25,7 @@ export class ProductService {
   async getProductByType(type: string): Promise<any> {
     if (type) {
       return await this.productModel.find({ type: type });
-    } else return new HttpException('Can not find', HttpStatus.NOT_FOUND);
+    } else return await this.productModel.find({});
   }
 
   async createProduct(product: Object): Promise<Product> {
@@ -40,7 +40,6 @@ export class ProductService {
   async deleteProduct(id: string): Promise<any> {
     return this.productModel.findByIdAndRemove(id);
   }
-
   async uploadImage(
     file: Express.Multer.File,
   ): Promise<UploadApiResponse | UploadApiErrorResponse> {

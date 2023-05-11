@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useNavigate } from 'react-router-dom';
 import './cardItem.scss';
 
 const CardItem = (props) => {
+  const navigate = useNavigate();
   const [data, setData] = useState({});
   useEffect(() => {
     if (props.data) {
@@ -15,8 +17,11 @@ const CardItem = (props) => {
       <Card.Img className="image" variant="top" src={data.image} />
       <Card.Body>
         <Card.Title>{data.name}</Card.Title>
-        <Card.Text>{data.price}</Card.Text>
-        <Button variant="primary" href={'/product/' + data._id}>
+        <Card.Text>{data.price} VND</Card.Text>
+        <Button
+          variant="primary"
+          onClick={() => navigate('/product/' + data._id)}
+        >
           Detail
         </Button>
       </Card.Body>

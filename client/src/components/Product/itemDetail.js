@@ -18,7 +18,7 @@ const ItemDetail = () => {
   const [showAlert, setShowAlert] = useState(false);
   async function getProduct() {
     const product = await axios.get(
-      'http://localhost:8000/api/product/' + productId,
+      `http://localhost:8000/api/product/${productId}`,
     );
     setData(product.data);
     const products = await axios.get(
@@ -64,31 +64,34 @@ const ItemDetail = () => {
           Added success (click to close this alert)
         </Alert>
       )}
-      <Row className="row">
-        <Col sm className="imageCol">
-          <img className="image" src={data.image} alt={data.name} />
-        </Col>
-        <Col>
-          <h1>{data.name}</h1>
-          <h3>Type: {data.type}</h3>
-          <h3>Price: {data.price}</h3>
-          {isLoggedIn ? (
-            <Button variant="primary" onClick={addCart}>
-              Add cart
-            </Button>
-          ) : (
-            <Button variant="primary" onClick={btnAlert}>
-              Add cart
-            </Button>
-          )}
-        </Col>
-      </Row>
+      {Object.keys(data).length !== 0 && (
+        <div className="item">
+          <div className="item-image">
+            <img className="image" src={data.image} alt={data.name} />
+          </div>
+          <div className="item-info">
+            <h1>{data.name.toUpperCase()}</h1>
+            <h3>Type: {data.type}</h3>
+            <h3>Price: {data.price} VND</h3>
+
+            {isLoggedIn ? (
+              <Button variant="primary" onClick={addCart}>
+                Add cart
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={btnAlert}>
+                Add cart
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
       {listProduct.length > 0 && (
         <>
           <h2>May be you like</h2>
           <Row>
-            {listProduct.map((item) => (
-              <Col>
+            {listProduct.map((item, index) => (
+              <Col key={index}>
                 <CardItem data={item} />
               </Col>
             ))}

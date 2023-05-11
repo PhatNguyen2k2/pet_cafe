@@ -9,6 +9,8 @@ export class Product {
   @Prop({ required: true })
   price: number;
   @Prop({ required: true })
+  amount: number;
+  @Prop({ required: true })
   image: string;
   @Prop({ default: Date.now() })
   createdDate: Date;

@@ -13,7 +13,6 @@ import {
   Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { Product } from '../model/product.chema';
 import { ProductService } from '../service/product.service';
 
@@ -26,18 +25,13 @@ export class ProductController {
     return await this.productService.detail(id);
   }
   @Post('/create')
-  @UseInterceptors(FileInterceptor('file'))
-  async create(
-    @Res() res: any,
-    @Body() product: Product,
-    @UploadedFiles() file: Express.Multer.File,
-  ) {
-    const uploadImage = await this.productService.uploadImage(file);
+  async create(@Res() res: any, @Body() product: Product) {
     const requestBody = {
       name: product.name,
       type: product.type,
       price: product.price,
-      image: uploadImage.url,
+      amount: product.amount,
+      image: product.image,
     };
     const newProduct = await this.productService.createProduct(requestBody);
     return res.status(HttpStatus.CREATED).json({ newProduct });

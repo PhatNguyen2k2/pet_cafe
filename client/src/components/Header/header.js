@@ -3,9 +3,7 @@ import axios from 'axios';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -50,13 +48,16 @@ const Header = () => {
       </>
     );
   };
+  const handleOnSelect = (item) => {
+    navigate('/product/' + item._id);
+  };
   useEffect(() => {
     getProduct();
   }, [listProduct]);
   return (
-    <Navbar id="navbar" bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className="header">
       <Container fluid>
-        <Navbar.Brand id="logo" href="/">
+        <Navbar.Brand id="logo" onClick={() => navigate('/')}>
           <img
             id="image"
             src="https://res.cloudinary.com/da5yv096f/image/upload/v1676201571/petcafeLogo_yz4ltv.png"
@@ -77,32 +78,48 @@ const Header = () => {
           <Offcanvas.Body>
             <Nav
               className="flex-grow-1 pe-3"
-              style={{ maxHeight: '100px' }}
-              navbarScroll
+              style={{
+                maxHeight: '400px',
+                fontSize: 'larger',
+                fontWeight: 'bold',
+              }}
             >
-              <Nav.Link className="navlink" href="/">
-                Home
-              </Nav.Link>
-              <Nav.Link className="navlink" href="/product/drink/all">
+              <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
+              <Nav.Link onClick={() => navigate('/product/drink/all')}>
                 Drink
               </Nav.Link>
-              <Nav.Link className="navlink" href="/product/pet/all">
+              <Nav.Link onClick={() => navigate('/product/pet/all')}>
                 Pet
               </Nav.Link>
-              <Nav.Link className="navlink" href="/aboutUs">
-                About us
-              </Nav.Link>
+              <Nav.Link onClick={() => navigate('/aboutUs')}>About us</Nav.Link>
             </Nav>
-            <Nav id="nav">
-              <Nav.Link to="/cart">
-                <div className="cart">
-                  <img
-                    className="image"
-                    src="https://res.cloudinary.com/da5yv096f/image/upload/v1675176667/icons8-shopping-cart_kro61k.gif"
-                    alt="cart"
-                  />
-                  {numberProduct > 0 && <p id="numProduct">{numberProduct}</p>}
-                </div>
+            <Nav
+              className="justify-content-end flex-grow-1 pe-3"
+              style={{ maxHeight: '300px' }}
+            >
+              <Nav.Link
+                style={{ display: 'flex' }}
+                onClick={() => navigate('/cart')}
+              >
+                <img
+                  className="image"
+                  style={{ width: '40px', height: '40px' }}
+                  src="https://res.cloudinary.com/da5yv096f/image/upload/v1675176667/icons8-shopping-cart_kro61k.gif"
+                  alt="cart"
+                />
+                {numberProduct > 0 && (
+                  <p
+                    style={{
+                      color: 'white',
+                      backgroundColor: 'red',
+                      borderRadius: '30px',
+                      fontSize: '15px',
+                    }}
+                    id="numProduct"
+                  >
+                    {numberProduct}
+                  </p>
+                )}
               </Nav.Link>
               <NavDropdown
                 title={
@@ -119,8 +136,12 @@ const Header = () => {
               >
                 {isLoggedIn ? (
                   <div>
-                    <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                    <NavDropdown.Item href="/bill">Bill</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => navigate('/profile')}>
+                      Profile
+                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => navigate('/bill')}>
+                      Bill
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={logoutHandler}>
                       Log out
@@ -128,8 +149,12 @@ const Header = () => {
                   </div>
                 ) : (
                   <div>
-                    <NavDropdown.Item href="/signin">Sign in</NavDropdown.Item>
-                    <NavDropdown.Item href="/signup">Sign up</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => navigate('/signin')}>
+                      Sign in
+                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => navigate('/signup')}>
+                      Sign up
+                    </NavDropdown.Item>
                   </div>
                 )}
               </NavDropdown>
@@ -139,6 +164,7 @@ const Header = () => {
                 <ReactSearchAutocomplete
                   items={listProduct}
                   formatResult={formatResult}
+                  onSelect={handleOnSelect}
                 />
               </div>
             )}

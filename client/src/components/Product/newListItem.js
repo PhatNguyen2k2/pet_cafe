@@ -20,20 +20,32 @@ const NewListItem = (props) => {
   return (
     <>
       <Container>
-        {drink ? <h1>Our new drink</h1> : <h1>Our new pet</h1>}
+        {drink ? (
+          <h1 style={{ fontFamily: '"Playfair Display", serif' }}>
+            Our new drink
+          </h1>
+        ) : (
+          <h1 style={{ fontFamily: '"Playfair Display", serif' }}>
+            Our new pet
+          </h1>
+        )}
         <div className="listProduct">
           <Row>
-            {data.map((item) => (
-              <Col>
-                <CardItem data={item} key={item._id} />
+            {data.map((item, index) => (
+              <Col key={index}>
+                <CardItem data={item} />
               </Col>
             ))}
           </Row>
           <div className="viewMore">
             {drink ? (
-              <NavLink to="/product/drink">View More</NavLink>
+              <NavLink className="link" to="/product/drink/all">
+                View More
+              </NavLink>
             ) : (
-              <NavLink to="/product/pet">View More</NavLink>
+              <NavLink className="link" to="/product/pet/all">
+                View More
+              </NavLink>
             )}
           </div>
         </div>

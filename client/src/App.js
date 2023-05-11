@@ -8,6 +8,7 @@ const ViewHome = React.lazy(() => import('./pages/viewHome'));
 const ViewAuth = React.lazy(() => import('./pages/viewAuth'));
 const ViewDetail = React.lazy(() => import('./pages/viewDetail'));
 const ViewProfile = React.lazy(() => import('./pages/viewProfile'));
+const ViewMenu = React.lazy(() => import('./pages/viewMenu'));
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route path="/product/:productId" element={<ViewDetail />} />
           <Route path="/profile" element={<ViewProfile />} />
           <Route path="/loading" element={<Loading />} />
+          <Route path="/product/drink/all" element={<ViewMenu type="drink"/>} />
+          <Route path="/product/pet/all" element={<ViewMenu type="pet"/>} />
         </Routes>
       </Suspense>
     </>

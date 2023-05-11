@@ -1,7 +1,23 @@
 .listProduct {
   background-color: whitesmoke;
   border-radius: 2%;
+  font-family: 'Playfair Display', serif;
   .viewMore {
     text-align: right;
+    .link {
+      height: 2.8em;
+      width: 9em;
+      background: transparent;
+      text-decoration: none;
+      border: 2px solid #016dd9;
+      outline: none;
+      border-radius: 5px;
+      color: #016dd9;
+      font-size: 17px;
+      &:hover {
+        background: #016dd9;
+        color: #ffffff;
+      }
+    }
   }
 }

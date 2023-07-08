@@ -63,43 +63,127 @@ export class UserService {
     return await this.userModel.findOne({ email }).exec();
   }
 
+  // async basketAdd(id: string, quantity: any, user: Object): Promise<Basket> {
+  //   let d: any;
+  //   try {
+  //     d = await this.ProductModel.findById(id);
+  //   } catch (e) {
+  //     throw new HttpException(
+  //       'this product is not exist',
+  //       HttpStatus.BAD_REQUEST,
+  //     );
+  //   }
+  //   const u = new this.userModel(user);
+  //   let basket = await this.basketModel.findById(u._id);
+  //   const newItem = {
+  //     id: id,
+  //     name: d.name,
+  //     price: d.price,
+  //     quantity: quantity.num,
+  //   };
+  //   if (basket) {
+  //     let flag = basket.items.some((item) => item.id === id);
+  //     flag
+  //       ? basket.items.forEach((item) => {
+  //           if (item.id === id) item.quantity += newItem.quantity;
+  //         })
+  //       : basket.items.push(newItem);
+  //     basket.total += newItem.quantity * newItem.price;
+  //     basket.markModified('items');
+  //     basket.markModified('total');
+  //   } else {
+  //     const newBasket = {
+  //       _id: u._id.toString(),
+  //       items: [],
+  //       total: newItem.quantity * newItem.price,
+  //     };
+  //     newBasket.items.push(newItem);
+  //     basket = new this.basketModel(newBasket);
+  //   }
+  //   return basket.save();
+  // }
   async basketAdd(id: string, quantity: any, user: Object): Promise<Basket> {
-    let d: any;
     try {
-      d = await this.ProductModel.findById(id);
-    } catch (e) {
-      throw new HttpException(
-        'this product is not exist',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    const u = new this.userModel(user);
-    let basket = await this.basketModel.findById(u._id);
-    const newItem = {
-      id: id,
-      name: d.name,
-      price: d.price,
-      quantity: quantity.num,
-    };
-    if (basket) {
-      let flag = basket.items.some((item) => item.id === id);
-      flag
-        ? basket.items.forEach((item) => {
-            if (item.id === id) item.quantity += newItem.quantity;
-          })
-        : basket.items.push(newItem);
-      basket.total += newItem.quantity * newItem.price;
+      const product = await this.ProductModel.findById(id);
+      if (!product) {
+        throw new HttpException(
+          'This product does not exist',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      const userInstance = new this.userModel(user);
+      let basket = await this.basketModel.findById(userInstance._id);
+
+      const newItem = {
+        id: id,
+        name: product.name,
+        price: product.price,
+        quantity: quantity.num,
+      };
+
+      if (basket) {
+        const existingItemIndex = basket.items.findIndex(
+          (item) => item.id === id,
+        );
+
+        if (existingItemIndex !== -1) {
+          basket.items[existingItemIndex].quantity += newItem.quantity;
+        } else {
+          basket.items.push(newItem);
+        }
+
+        basket.total += newItem.quantity * newItem.price;
+      } else {
+        const newBasket = {
+          _id: userInstance._id.toString(),
+          items: [newItem],
+          total: newItem.quantity * newItem.price,
+        };
+        basket = new this.basketModel(newBasket);
+      }
+
       basket.markModified('items');
       basket.markModified('total');
-    } else {
-      const newBasket = {
-        _id: u._id.toString(),
-        items: [],
-        total: newItem.quantity * newItem.price,
-      };
-      newBasket.items.push(newItem);
-      basket = new this.basketModel(newBasket);
+      return basket.save();
+    } catch (error) {
+      throw new HttpException(
+        'Error adding product to basket',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
-    return basket.save();
+  }
+  async basketRemove(id: string, user: Object): Promise<Basket> {
+    try {
+      const userInstance = new this.userModel(user);
+      let basket = await this.basketModel.findById(userInstance._id);
+
+      if (!basket) {
+        throw new HttpException('Basket not found', HttpStatus.NOT_FOUND);
+      }
+
+      const itemIndex = basket.items.findIndex((item) => item.id === id);
+
+      if (itemIndex === -1) {
+        throw new HttpException(
+          'Product not found in basket',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const removedItem = basket.items[itemIndex];
+      basket.items.splice(itemIndex, 1);
+      basket.total -= removedItem.quantity * removedItem.price;
+
+      basket.markModified('items');
+      basket.markModified('total');
+
+      return basket.save();
+    } catch (error) {
+      throw new HttpException(
+        'Error removing product from basket',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

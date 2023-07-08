@@ -6,7 +6,7 @@ import {
   HttpStatus,
   Param,
   Post,
-  UploadedFiles,
+  UploadedFile,
   Put,
   Req,
   Res,
@@ -15,6 +15,7 @@ import {
 } from '@nestjs/common';
 import { Product } from '../model/product.chema';
 import { ProductService } from '../service/product.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('/api/product')
 export class ProductController {
@@ -25,29 +26,33 @@ export class ProductController {
     return await this.productService.detail(id);
   }
   @Post('/create')
-  async create(@Res() res: any, @Body() product: Product) {
-    const requestBody = {
-      name: product.name,
-      type: product.type,
-      price: product.price,
-      amount: product.amount,
-      image: product.image,
-    };
-    const newProduct = await this.productService.createProduct(requestBody);
-    return res.status(HttpStatus.CREATED).json({ newProduct });
+  @UseInterceptors(FileInterceptor('image'))
+  async createProduct(
+    @UploadedFile() image: Express.Multer.File,
+    @Body() product: any,
+    @Res() res: any,
+  ): Promise<Product> {
+    const newProduct = await this.productService.createProduct(product, image);
+    return res.status(HttpStatus.CREATED).json(newProduct);
   }
   @Put('/:id')
-  async update(
+  @UseInterceptors(FileInterceptor('image'))
+  async updateProduct(
+    @Param('id') productId: string,
+    @UploadedFile() image: Express.Multer.File,
+    @Body() updateProduct: any,
     @Res() res: any,
-    @Param('id') id: string,
-    @Body() product: Product,
-  ) {
-    const updatedProduct = await this.productService.updateProduct(id, product);
+  ): Promise<Product> {
+    const updatedProduct = await this.productService.updateProduct(
+      productId,
+      updateProduct,
+      image,
+    );
     return res.status(HttpStatus.OK).json(updatedProduct);
   }
   @Delete('/:id')
-  async delete(@Res() res: any, @Param('id') id: string) {
-    await this.productService.deleteProduct(id);
+  async delete(@Res() res: any, @Param('id') productId: string) {
+    await this.productService.deleteProduct(productId);
     return res.status(HttpStatus.OK);
   }
   @Get('/drink/new')
@@ -64,7 +69,7 @@ export class ProductController {
   }
   @Get('/type/find')
   async productType(@Query('type') type: any, @Res() res: any) {
-    const product = await this.productService.getProductByType(type);
-    return res.status(HttpStatus.OK).json(product);
+    await this.productService.getProductByType(type);
+    return res.status(HttpStatus.OK);
   }
 }

@@ -73,7 +73,7 @@ const ItemDetail = () => {
             <h1>{data.name.toUpperCase()}</h1>
             <h3>Type: {data.type}</h3>
             <h3>Price: {data.price} VND</h3>
-
+            <input type="number" min="1" max={data.amount} defaultValue="1" />
             {isLoggedIn ? (
               <Button variant="primary" onClick={addCart}>
                 Add cart

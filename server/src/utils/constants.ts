@@ -3,3 +3,6 @@ export const secret =
 export const CLOUDINARY_NAME = 'da5yv096f';
 export const CLOUDINARY_KEY = '116618928134554';
 export const CLOUDINARY_SECRET = 'DL_JL09hNUvW0LVTiPxgSdhsyOY';
+export const GOOGLE_CLIENT_ID =
+  '869066755288-lltq6vn8qo07nbf46i4igqsgsrc1csrn.apps.googleusercontent.com';
+export const GOOGLE_CLIENT_SECRET = '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';

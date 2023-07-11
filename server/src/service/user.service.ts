@@ -59,6 +59,20 @@ export class UserService {
     );
   }
 
+  async validateGoogleLogin(profile: any, jwt: JwtService) {
+    // Xử lý xác thực và đăng nhập người dùng
+    const { email, name, avatar, address } = profile;
+
+    // Tạo mã thông báo truy cập
+    const payload = { email };
+    const token = jwt.sign(payload);
+
+    return {
+      user: { name, email, address, avatar },
+      token,
+    };
+  }
+
   async getOne(email: string): Promise<User> {
     return await this.userModel.findOne({ email }).exec();
   }

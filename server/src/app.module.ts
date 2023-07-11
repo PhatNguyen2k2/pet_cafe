@@ -13,6 +13,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { secret } from './utils/constants';
 import { join } from 'path';
 import { isAuthenticated } from './app.middleware';
+import { PassportModule } from '@nestjs/passport';
+import { GoogleTokenStrategy } from 'passport-google-token';
+import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { Basket, BasketSchema } from './model/basket';
@@ -23,6 +26,8 @@ import { Basket, BasketSchema } from './model/basket';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
     MongooseModule.forFeature([{ name: Basket.name, schema: BasketSchema }]),
+    PassportModule.register({ defaultStrategy: 'google-token' }),
+    ConfigModule.forRoot(),
     MulterModule.register({
       storage: memoryStorage(),
     }),
@@ -31,11 +36,11 @@ import { Basket, BasketSchema } from './model/basket';
       signOptions: { expiresIn: '2h' },
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'src/public'),
+      rootPath: join(__dirname, '..', 'public'),
     }),
   ],
   controllers: [AppController, UserController, ProductController],
-  providers: [AppService, UserService, ProductService],
+  providers: [AppService, UserService, ProductService, GoogleTokenStrategy],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

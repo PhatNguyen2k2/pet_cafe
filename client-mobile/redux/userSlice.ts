@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface UserState {
-  loggedIn: boolean;
-  userInfo: UserInfo | null;
+export interface UserInfo {
+  fullname: string;
+  email: string;
+  address: string;
+  avatar: string;
 }
 
-interface UserInfo {
-  // Thông tin người dùng
+export interface UserState {
+  loggedIn: boolean;
+  userInfo: UserInfo | null;
 }
 
 const initialState: UserState = {

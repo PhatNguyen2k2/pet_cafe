@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifyCallback } from 'passport-google-token';
+import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from './user.service';
@@ -7,10 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../utils/constants';
 
 @Injectable()
-export class GoogleTokenStrategy extends PassportStrategy(
-  Strategy,
-  'google-token',
-) {
+export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(
     private jwtService: JwtService,
     private readonly userService: UserService,
@@ -18,6 +15,7 @@ export class GoogleTokenStrategy extends PassportStrategy(
     super({
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: 'http://localhost:3000/',
     });
   }
 

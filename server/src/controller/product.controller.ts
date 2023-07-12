@@ -69,7 +69,7 @@ export class ProductController {
   }
   @Get('/type/find')
   async productType(@Query('type') type: any, @Res() res: any) {
-    await this.productService.getProductByType(type);
-    return res.status(HttpStatus.OK);
+    const product = await this.productService.getProductByType(type);
+    return res.status(HttpStatus.OK).json(product);
   }
 }

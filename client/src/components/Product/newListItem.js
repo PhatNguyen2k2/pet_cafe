@@ -1,14 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import CardItem from './cardItem';
 import './newListItem.scss';
 import { NavLink } from 'react-router-dom';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const NewListItem = (props) => {
   const [data, setData] = useState([]);
   const [drink, setDrink] = useState(true);
+  const sliderRef = useRef(null);
+  const settings = {
+    dots: true,
+    arrows: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
   useEffect(() => {
     if (props.data) {
       setData(props.data);
@@ -30,13 +54,11 @@ const NewListItem = (props) => {
           </h1>
         )}
         <div className="listProduct">
-          <Row>
+          <Slider {...settings} ref={sliderRef}>
             {data.map((item, index) => (
-              <Col key={index}>
-                <CardItem data={item} />
-              </Col>
+              <CardItem key={index} data={item} />
             ))}
-          </Row>
+          </Slider>
           <div className="viewMore">
             {drink ? (
               <NavLink className="link" to="/product/drink/all">

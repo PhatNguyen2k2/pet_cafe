@@ -6,9 +6,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./screens/HomeScreen";
 import DrinkMenuScreen from "./screens/DrinkMenuScreen";
 import PetMenuScreen from "./screens/PetMenuScreen";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 const Tab = createBottomTabNavigator();
 export default function App() {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -35,5 +38,6 @@ export default function App() {
         <Tab.Screen name="Pets" component={PetMenuScreen} />
       </Tab.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }

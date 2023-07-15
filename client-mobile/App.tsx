@@ -1,16 +1,16 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./screens/HomeScreen";
 import DrinkMenuScreen from "./screens/DrinkMenuScreen";
 import PetMenuScreen from "./screens/PetMenuScreen";
+import SignIn from "./screens/Auth/SignInScreen";
+import SignUp from "./screens/Auth/SignUpScreen";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { navigationRef } from "./components/RootNavigation";
-import SignIn from "./components/Auth/Signin";
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 function HomeStack() {
@@ -18,6 +18,7 @@ function HomeStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUp" component={SignUp} />
     </Stack.Navigator>
   );
 }

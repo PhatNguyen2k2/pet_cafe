@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   ScrollView,
@@ -15,6 +15,7 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ images, texts }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const handleScroll = (event: any) => {
     const { contentOffset } = event.nativeEvent;
@@ -24,9 +25,22 @@ const Carousel: React.FC<CarouselProps> = ({ images, texts }) => {
 
   const { width } = Dimensions.get("window");
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // Kiểm tra nếu đang ở slide cuối cùng thì chuyển về slide đầu tiên
+      const newIndex = activeIndex === images.length - 1 ? 0 : activeIndex + 1;
+      setActiveIndex(newIndex);
+      // Tự động cuộn tới slide tiếp theo
+      scrollViewRef.current?.scrollTo({ x: newIndex * width, animated: true });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [activeIndex, images.length, width]);
+
   return (
     <View style={styles.container}>
       <ScrollView
+        ref={scrollViewRef}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}

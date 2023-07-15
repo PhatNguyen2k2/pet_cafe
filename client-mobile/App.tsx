@@ -8,36 +8,48 @@ import DrinkMenuScreen from "./screens/DrinkMenuScreen";
 import PetMenuScreen from "./screens/PetMenuScreen";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { navigationRef } from "./components/RootNavigation";
+import SignIn from "./components/Auth/Signin";
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+function HomeStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="SignIn" component={SignIn} />
+    </Stack.Navigator>
+  );
+}
 export default function App() {
   return (
     <Provider store={store}>
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName = "home";
+      <NavigationContainer ref={navigationRef}>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            headerShown: false,
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName = "home";
 
-            if (route.name === "Home") {
-              iconName = focused ? "home" : "home-outline";
-            } else if (route.name === "Drinks") {
-              iconName = focused ? "cafe" : "cafe-outline";
-            } else if (route.name === "Pets") {
-              iconName = focused ? "paw" : "paw-outline";
-            }
+              if (route.name === "Home") {
+                iconName = focused ? "home" : "home-outline";
+              } else if (route.name === "Drinks") {
+                iconName = focused ? "cafe" : "cafe-outline";
+              } else if (route.name === "Pets") {
+                iconName = focused ? "paw" : "paw-outline";
+              }
 
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: "violet",
-          tabBarInactiveTintColor: "gray",
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Drinks" component={DrinkMenuScreen} />
-        <Tab.Screen name="Pets" component={PetMenuScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: "violet",
+            tabBarInactiveTintColor: "gray",
+          })}
+        >
+          <Tab.Screen name="HomeStack" component={HomeStack} />
+          <Tab.Screen name="Drinks" component={DrinkMenuScreen} />
+          <Tab.Screen name="Pets" component={PetMenuScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 }

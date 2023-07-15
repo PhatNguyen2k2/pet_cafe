@@ -36,7 +36,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, logoSource }) => {
   };
 
   const handleSignUp = () => {
-    // navigation.navigate("SignUp");
+    RootNavigation.navigate("SignUp");
   };
 
   const handleLogout = () => {
@@ -50,10 +50,10 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, logoSource }) => {
         <Image source={{ uri: logoSource }} style={styles.logo} />
         {loggedIn ? (
           <>
+            <Image source={{ uri: userInfo?.avatar }} style={styles.avatar} />
             <TouchableOpacity onPress={handleLogout}>
               <Text>Log Out</Text>
             </TouchableOpacity>
-            <Image source={{ uri: userInfo?.avatar }} style={styles.avatar} />
           </>
         ) : (
           <>
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f0f0f0",
     zIndex: 1,
+    height: 60,
   },
   header: {
     flexDirection: "row",
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   dropdownContainer: {
-    width: 120,
+    width: 110,
     alignItems: "flex-end",
   },
   dropdown: {

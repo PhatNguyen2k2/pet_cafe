@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,25 +6,33 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import DropDownPicker from "react-native-dropdown-picker";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { logout } from "../redux/userSlice";
+import * as RootNavigation from "./RootNavigation";
 
 interface CustomHeaderProps {
   title: string;
   logoSource: string;
 }
-
 const CustomHeader: React.FC<CustomHeaderProps> = ({ title, logoSource }) => {
   const navigation = useNavigation();
   const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: "Sign In", value: "signin" },
+    { label: "Sign Up", value: "signup" },
+  ]);
   const dispatch = useDispatch();
 
   const handleSignIn = () => {
-    // navigation.navigate("SignIn");
+    RootNavigation.navigate("SignIn");
   };
 
   const handleSignUp = () => {
@@ -39,7 +47,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, logoSource }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor="#f0f0f0" barStyle="dark-content" />
       <View style={styles.header}>
-        <Text style={styles.title}>{title}</Text>
         <Image source={{ uri: logoSource }} style={styles.logo} />
         {loggedIn ? (
           <>
@@ -50,12 +57,26 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, logoSource }) => {
           </>
         ) : (
           <>
-            <TouchableOpacity onPress={handleSignIn}>
-              <Text>Sign In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleSignUp}>
-              <Text>Sign Up</Text>
-            </TouchableOpacity>
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              placeholder="Account"
+              containerStyle={styles.dropdownContainer}
+              style={styles.dropdown}
+              labelStyle={styles.dropdownItem}
+              dropDownContainerStyle={styles.dropdownMenu}
+              onSelectItem={(item: any) => {
+                if (item.value === "signin") {
+                  handleSignIn();
+                } else if (item.value === "signup") {
+                  handleSignUp();
+                }
+              }}
+            />
           </>
         )}
       </View>
@@ -66,17 +87,14 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, logoSource }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f0f0f0",
+    zIndex: 1,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     paddingHorizontal: 10,
     paddingVertical: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
+    justifyContent: "space-between",
   },
   logo: {
     width: 50,
@@ -87,6 +105,22 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
+  },
+  dropdownContainer: {
+    width: 120,
+    alignItems: "flex-end",
+  },
+  dropdown: {
+    backgroundColor: "#f0f0f0",
+    borderWidth: 0,
+  },
+  dropdownItem: {
+    justifyContent: "flex-start",
+  },
+  dropdownMenu: {
+    backgroundColor: "#f0f0f0",
+    borderWidth: 0,
+    marginTop: -1,
   },
 });
 

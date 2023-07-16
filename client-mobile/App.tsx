@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./screens/HomeScreen";
-import DrinkMenuScreen from "./screens/DrinkMenuScreen";
+import ProductList from "./screens/DrinkMenuScreen";
 import PetMenuScreen from "./screens/PetMenuScreen";
 import SignIn from "./screens/Auth/SignInScreen";
 import SignUp from "./screens/Auth/SignUpScreen";
@@ -47,7 +47,7 @@ export default function App() {
           })}
         >
           <Tab.Screen name="HomeStack" component={HomeStack} />
-          <Tab.Screen name="Drinks" component={DrinkMenuScreen} />
+          <Tab.Screen name="Drinks" component={ProductList} />
           <Tab.Screen name="Pets" component={PetMenuScreen} />
         </Tab.Navigator>
       </NavigationContainer>

@@ -36,7 +36,7 @@ const SignIn = () => {
         Alert.alert("Error", "Please check your password or email");
       } else {
         dispatch(login(data)); // Sử dụng action login từ userSlice
-        RootNavigation.navigate("Home");
+        RootNavigation.navigate("HomeMain");
       }
     } catch (error) {
       console.error(error);

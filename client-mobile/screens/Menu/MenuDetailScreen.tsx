@@ -4,10 +4,14 @@ import {
   View,
   FlatList,
   Image,
-  Dimensions,
   StyleSheet,
   Text,
+  SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
+import CustomHeader from "../../components/CustomHeader";
+import * as RootNavigation from "../../components/RootNavigation";
 
 interface Product {
   _id: string;
@@ -16,10 +20,11 @@ interface Product {
   image: string;
 }
 
-const screenWidth = Dimensions.get("window").width;
-
 const ProductList = ({ route }: any) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const handleProductPress = (id: string) => {
+    RootNavigation.navigate("ProductDetail", { id });
+  };
   useEffect(() => {
     axios
       .get(
@@ -34,72 +39,101 @@ const ProductList = ({ route }: any) => {
   }, []);
   const renderProduct = ({ item }: { item: Product }) => {
     return (
-      <View style={styles.productContainer}>
-        <View style={styles.productImageContainer}>
-          <Image source={{ uri: item.image }} style={styles.productImage} />
+      <TouchableOpacity onPress={() => handleProductPress(item._id)}>
+        <View style={styles.itemContainer}>
+          <View style={styles.shadowContainer}>
+            <Image source={{ uri: item.image }} style={styles.image} />
+            <View style={styles.infoContainer}>
+              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.price}>Price: {item.price} VND</Text>
+            </View>
+          </View>
         </View>
-        <View style={styles.productNameContainer}>
-          <Text style={styles.productName}>{item.name}</Text>
-        </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={products}
-        renderItem={renderProduct}
-        keyExtractor={(item) => item._id}
-        numColumns={1}
-        contentContainerStyle={styles.listContainer}
+    <>
+      <CustomHeader
+        title="DrinksMenu"
+        logoSource="https://res.cloudinary.com/da5yv096f/image/upload/v1676201571/petcafeLogo_yz4ltv.png"
       />
-    </View>
+      <SafeAreaView style={styles.container}>
+        <Animatable.Text
+          animation="flipInX"
+          iterationCount="infinite"
+          direction="alternate"
+          style={styles.title}
+        >
+          Now choose your drink
+        </Animatable.Text>
+        <Text style={styles.textMuted}>
+          * Log in before add something to your card
+        </Text>
+        <FlatList
+          data={products}
+          renderItem={renderProduct}
+          keyExtractor={(item) => item._id}
+          contentContainerStyle={styles.flatlistContainer}
+        />
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+  },
+  flatlistContainer: {
+    paddingHorizontal: 16,
+  },
+  itemContainer: {
     alignItems: "center",
+    marginVertical: 5,
   },
-  listContainer: {
-    flexGrow: 1,
-    justifyContent: "center",
+  shadowContainer: {
+    flexDirection: "row",
     alignItems: "center",
-  },
-  productContainer: {
-    alignItems: "center",
-    marginVertical: 10,
-    marginHorizontal: 10,
-  },
-  productImageContainer: {
-    width: (screenWidth - 40) / 2,
-    height: (screenWidth - 40) / 2,
-    borderRadius: 10,
-    overflow: "hidden",
-    elevation: 5,
-  },
-  productImage: {
-    width: "100%",
-    height: "100%",
-  },
-  productNameContainer: {
-    position: "absolute",
-    top: (screenWidth - 40) / 4,
-    left: 10,
-    right: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    padding: 5,
+    padding: 10,
+    backgroundColor: "#fff",
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 10,
   },
-  productName: {
-    color: "#fff",
-    fontSize: 12,
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
     textAlign: "center",
+  },
+  image: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  infoContainer: {
+    flex: 1,
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  price: {
+    fontSize: 14,
+  },
+  textMuted: {
+    fontSize: 14,
+    color: "#999",
+    textAlign: "center",
+    marginBottom: 5,
   },
 });
 

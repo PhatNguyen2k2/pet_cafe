@@ -72,7 +72,7 @@ const DrinkMenu = () => {
   return (
     <>
       <CustomHeader
-        title="Home"
+        title="DrinksType"
         logoSource="https://res.cloudinary.com/da5yv096f/image/upload/v1676201571/petcafeLogo_yz4ltv.png"
       />
       <View style={styles.container}>
@@ -113,12 +113,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 10,
   },
   listContainer: {
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: -20,
   },
   productContainer: {
     alignItems: "center",

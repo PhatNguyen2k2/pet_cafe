@@ -35,7 +35,7 @@ const DrinkDetail: React.FC<DrinkDetailProps> = ({ route }) => {
     try {
       const response = await axios.get(
         `http://192.168.1.8:8000/api/product/${route.params.id}`
-      ); // Thay đổi đường dẫn API tương ứng
+      );
       setDrink(response.data);
     } catch (error) {
       console.log(error);

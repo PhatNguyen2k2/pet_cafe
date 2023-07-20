@@ -11,6 +11,7 @@ import store from "./redux/store";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { navigationRef } from "./components/RootNavigation";
 import ProductList from "./screens/Menu/MenuDetailScreen";
+import DrinkDetail from "./screens/Menu/DrinkDetailScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ function DrinksStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="DrinksType" component={DrinkMenu} />
       <Stack.Screen name="ProductList" component={ProductList} />
+      <Stack.Screen name="DrinkDetail" component={DrinkDetail} />
     </Stack.Navigator>
   );
 }

@@ -130,7 +130,14 @@ const styles = StyleSheet.create({
     height: (screenWidth - 40) / 2,
     borderRadius: 10,
     overflow: "hidden",
-    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 10,
   },
   productImage: {
     width: "100%",

@@ -23,12 +23,12 @@ interface Product {
 const ProductList = ({ route }: any) => {
   const [products, setProducts] = useState<Product[]>([]);
   const handleProductPress = (id: string) => {
-    RootNavigation.navigate("ProductDetail", { id });
+    RootNavigation.navigate("DrinkDetail", { id });
   };
   useEffect(() => {
     axios
       .get(
-        `http://192.168.1.8:8000/api/product/type/find?type=${route.params.typename}`
+        `http://192.168.1.16:8000/api/product/type/find?type=${route.params.typename}`
       )
       .then((response) => {
         setProducts(response.data);
@@ -42,7 +42,11 @@ const ProductList = ({ route }: any) => {
       <TouchableOpacity onPress={() => handleProductPress(item._id)}>
         <View style={styles.itemContainer}>
           <View style={styles.shadowContainer}>
-            <Image source={{ uri: item.image }} style={styles.image} />
+            <Image
+              source={{ uri: item.image }}
+              style={styles.image}
+              resizeMode="contain"
+            />
             <View style={styles.infoContainer}>
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.price}>Price: {item.price} VND</Text>

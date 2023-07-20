@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 8,
+    fontWeight: "bold",
   },
   input: {
     borderWidth: 1,
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
   },
   checkboxLabel: {
     marginLeft: 8,
+    fontWeight: "bold",
   },
   button: {
     backgroundColor: "blue",

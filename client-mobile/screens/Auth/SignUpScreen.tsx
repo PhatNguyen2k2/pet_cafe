@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
+    fontWeight: "bold",
     marginBottom: 8,
   },
   input: {
@@ -182,6 +183,7 @@ const styles = StyleSheet.create({
   },
   checkboxLabel: {
     fontSize: 16,
+    fontWeight: "bold",
     marginLeft: 8,
   },
   button: {

@@ -30,8 +30,10 @@ export default function HomeScreen() {
   const [showClearButton, setShowClearButton] = useState<boolean>(false);
   const [filteredDrinks, setFilteredDrinks] = useState<Product[]>([]);
   const [filteredPets, setFilteredPets] = useState<Product[]>([]);
-  const handleProductPress = (id: string) => {
-    RootNavigation.navigate("DrinkDetail", { id });
+  const handleProductPress = (id: string, type: string) => {
+    type === "cat" || type === "dog"
+      ? RootNavigation.navigate("PetDetail", { id })
+      : RootNavigation.navigate("DrinkDetail", { id });
   };
   const fetchProducts = async () => {
     try {
@@ -123,7 +125,7 @@ export default function HomeScreen() {
                 <TouchableOpacity
                   key={drink._id}
                   style={styles.productContainer}
-                  onPress={() => handleProductPress(drink._id)}
+                  onPress={() => handleProductPress(drink._id, drink.type)}
                 >
                   <Image
                     source={{ uri: drink.image }}
@@ -136,7 +138,7 @@ export default function HomeScreen() {
                 <TouchableOpacity
                   key={pet._id}
                   style={styles.productContainer}
-                  onPress={() => handleProductPress(pet._id)}
+                  onPress={() => handleProductPress(pet._id, pet.type)}
                 >
                   <Image
                     source={{ uri: pet.image }}

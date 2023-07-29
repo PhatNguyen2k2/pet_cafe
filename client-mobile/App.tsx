@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./screens/HomeScreen";
 import DrinkMenu from "./screens/Menu/DrinkMenuScreen";
-import PetMenuScreen from "./screens/Menu/PetMenuScreen";
+import PetMenu from "./screens/Menu/PetMenuScreen";
 import SignIn from "./screens/Auth/SignInScreen";
 import SignUp from "./screens/Auth/SignUpScreen";
 import { Provider } from "react-redux";
@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { navigationRef } from "./components/RootNavigation";
 import ProductList from "./screens/Menu/MenuDetailScreen";
 import DrinkDetail from "./screens/Menu/DrinkDetailScreen";
+import PetDetail from "./screens/Menu/PetDetailScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,15 @@ function DrinksStack() {
       <Stack.Screen name="DrinksType" component={DrinkMenu} />
       <Stack.Screen name="ProductList" component={ProductList} />
       <Stack.Screen name="DrinkDetail" component={DrinkDetail} />
+    </Stack.Navigator>
+  );
+}
+function PetsStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="PetsType" component={PetMenu} />
+      <Stack.Screen name="ProductList" component={ProductList} />
+      <Stack.Screen name="PetDetail" component={PetDetail} />
     </Stack.Navigator>
   );
 }
@@ -59,7 +69,7 @@ export default function App() {
         >
           <Tab.Screen name="Home" component={HomeStack} />
           <Tab.Screen name="Drinks" component={DrinksStack} />
-          <Tab.Screen name="Pets" component={PetMenuScreen} />
+          <Tab.Screen name="Pets" component={PetsStack} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

@@ -1,7 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import Swiper from "react-native-swiper";
-
+import * as RootNavigation from "../components/RootNavigation";
 interface Product {
   _id: string;
   name: string;
@@ -17,7 +24,11 @@ interface ProductSwiperProps {
 
 const ProductSwiper: React.FC<ProductSwiperProps> = ({ products }) => {
   const swiperRef = React.useRef<Swiper>(null);
-
+  const handleProductPress = (id: string, type: string) => {
+    type === "cat" || type === "dog"
+      ? RootNavigation.navigate("PetDetail", { id })
+      : RootNavigation.navigate("DrinkDetail", { id });
+  };
   const renderSlides = () => {
     const slides: JSX.Element[] = [];
     for (let i = 0; i < products.length; i += 2) {
@@ -25,11 +36,15 @@ const ProductSwiper: React.FC<ProductSwiperProps> = ({ products }) => {
       const slide = (
         <View key={i} style={styles.slideRow}>
           {rowProducts.map((product, index) => (
-            <View key={index} style={styles.slide}>
+            <TouchableOpacity
+              key={index}
+              style={styles.slide}
+              onPress={() => handleProductPress(product._id, product.type)}
+            >
               <Image source={{ uri: product.image }} style={styles.image} />
               <Text style={styles.name}>{product.name}</Text>
               <Text style={styles.price}>{product.price}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       );

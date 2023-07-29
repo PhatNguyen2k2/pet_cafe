@@ -23,7 +23,9 @@ interface Product {
 const ProductList = ({ route }: any) => {
   const [products, setProducts] = useState<Product[]>([]);
   const handleProductPress = (id: string) => {
-    RootNavigation.navigate("DrinkDetail", { id });
+    route.params.typename === "cat" || route.params.typename === "dog"
+      ? RootNavigation.navigate("PetDetail", { id })
+      : RootNavigation.navigate("DrinkDetail", { id });
   };
   useEffect(() => {
     axios
@@ -60,18 +62,29 @@ const ProductList = ({ route }: any) => {
   return (
     <>
       <CustomHeader
-        title="DrinksMenu"
+        title="ProductMenu"
         logoSource="https://res.cloudinary.com/da5yv096f/image/upload/v1676201571/petcafeLogo_yz4ltv.png"
       />
       <SafeAreaView style={styles.container}>
-        <Animatable.Text
-          animation="flipInX"
-          iterationCount="infinite"
-          direction="alternate"
-          style={styles.title}
-        >
-          Now choose your drink
-        </Animatable.Text>
+        {route.params.typename === "cat" || route.params.typename === "dog" ? (
+          <Animatable.Text
+            animation="flipInX"
+            iterationCount="infinite"
+            direction="alternate"
+            style={styles.title}
+          >
+            Now choose your pet
+          </Animatable.Text>
+        ) : (
+          <Animatable.Text
+            animation="flipInX"
+            iterationCount="infinite"
+            direction="alternate"
+            style={styles.title}
+          >
+            Now choose your drink
+          </Animatable.Text>
+        )}
         <Text style={styles.textMuted}>
           * Log in before add something to your card
         </Text>

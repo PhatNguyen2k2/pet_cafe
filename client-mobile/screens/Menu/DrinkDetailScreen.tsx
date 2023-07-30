@@ -10,6 +10,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import axios from "axios";
+import Toast from "react-native-toast-message";
+import * as SecureStore from "expo-secure-store";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
 import CustomHeader from "../../components/CustomHeader";
 
 interface Drink {
@@ -33,6 +37,7 @@ const options: Option[] = [
   { label: "100%", value: 100 },
 ];
 const DrinkDetail: React.FC<DrinkDetailProps> = ({ route }) => {
+  const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
   const [drink, setDrink] = useState<Drink | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [sugarLevel, setSugarLevel] = useState<Option | null>(null);
@@ -62,10 +67,48 @@ const DrinkDetail: React.FC<DrinkDetailProps> = ({ route }) => {
     }
   };
 
-  const addToCart = () => {
-    if (drink) {
-      // TODO: Add to cart
-      console.log("Added to cart:", drink);
+  const addToCart = async () => {
+    const token = await SecureStore.getItemAsync("token");
+    if (loggedIn) {
+      try {
+        await axios.post(
+          "http://192.168.1.16:8000/api/user/addBasket/" + route.params.id,
+          { num: quantity },
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        Toast.show({
+          type: "success",
+          text1: "Added successfully. Check your cart",
+          visibilityTime: 2000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+        });
+      } catch (err) {
+        Toast.show({
+          type: "error",
+          text1: "Can not connect to server, please log in and try again",
+          visibilityTime: 2000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+        });
+      }
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Please login to add to cart",
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     }
   };
 

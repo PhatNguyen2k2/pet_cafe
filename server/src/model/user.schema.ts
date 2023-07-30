@@ -15,7 +15,7 @@ export class User {
   isAdmin: boolean;
   @Prop({
     default:
-      'https://res.cloudinary.com/da5yv096f/image/upload/v1675437152/icons8-cat-head_y9nmtv.gif',
+      'https://res.cloudinary.com/da5yv096f/image/upload/v1690723022/output-onlinegiftools_dsphas.gif',
   })
   avatar: string;
   @Prop({ default: Date.now() })

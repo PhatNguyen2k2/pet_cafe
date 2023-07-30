@@ -9,11 +9,13 @@ import {
   ImageBackground,
 } from "react-native";
 import axios from "axios";
+import Toast from "react-native-toast-message";
 import * as RootNavigation from "../../components/RootNavigation";
 
 const SignUp = () => {
   const [passwordShow, setPasswordShow] = useState(false);
-  const [fullName, setFullName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -24,19 +26,23 @@ const SignUp = () => {
 
   const handleSubmit = async () => {
     const form = {
-      fullname: fullName,
+      fullname: surname + " " + name,
       email: email,
       address: address,
       password: password,
     };
     try {
-      const response = await axios.post(
-        "http://192.168.1.6:8000/api/user/signup",
-        form
-      );
-      // Handle successful response here
+      await axios.post("http://192.168.1.16:8000/api/user/signup", form);
+      RootNavigation.navigate("SignIn");
     } catch (error) {
-      // Handle error here
+      Toast.show({
+        type: "error",
+        text1: "Try again",
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     }
   };
 
@@ -58,8 +64,8 @@ const SignUp = () => {
           <TextInput
             style={styles.input}
             placeholder="Nguyen Van"
-            onChangeText={(text) => setFullName(text)}
-            value={fullName}
+            onChangeText={(text) => setSurname(text)}
+            value={surname}
           />
         </View>
         <View style={styles.formGroup}>
@@ -67,8 +73,8 @@ const SignUp = () => {
           <TextInput
             style={styles.input}
             placeholder="A"
-            onChangeText={(text) => setFullName(text)}
-            value={fullName}
+            onChangeText={(text) => setName(text)}
+            value={name}
           />
         </View>
         <View style={styles.formGroup}>

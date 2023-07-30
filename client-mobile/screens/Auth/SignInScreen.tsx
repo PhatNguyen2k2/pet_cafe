@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/userSlice";
-import { Alert } from "react-native";
+import axios from "axios";
+import Toast from "react-native-toast-message";
+import * as SecureStore from "expo-secure-store";
 import * as RootNavigation from "../../components/RootNavigation";
 
 const SignIn = () => {
@@ -24,22 +26,28 @@ const SignIn = () => {
       password: password,
     };
     try {
-      const response = await fetch("http://192.168.1.6:8000/api/user/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-      const data = await response.json();
-      if (response.status === 401) {
-        Alert.alert("Error", "Please check your password or email");
-      } else {
-        dispatch(login(data)); // Sử dụng action login từ userSlice
-        RootNavigation.navigate("HomeMain");
-      }
+      const response = await axios.post(
+        "http://192.168.1.16:8000/api/user/signin",
+        form,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.data;
+      await SecureStore.setItemAsync("token", data.token);
+      dispatch(login(data)); // Sử dụng action login từ userSlice
+      RootNavigation.navigate("HomeMain");
     } catch (error) {
-      console.error(error);
+      Toast.show({
+        type: "error",
+        text1: "Check your email or password again",
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     }
   };
 

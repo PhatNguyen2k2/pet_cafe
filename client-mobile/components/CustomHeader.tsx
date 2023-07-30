@@ -6,9 +6,7 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
-  Button,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
@@ -20,7 +18,6 @@ interface CustomHeaderProps {
   logoSource: string;
 }
 const CustomHeader: React.FC<CustomHeaderProps> = ({ title, logoSource }) => {
-  const navigation = useNavigation();
   const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
   const [open, setOpen] = useState(false);

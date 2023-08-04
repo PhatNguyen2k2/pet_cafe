@@ -47,7 +47,9 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, logoSource }) => {
         <Image source={{ uri: logoSource }} style={styles.logo} />
         {loggedIn ? (
           <>
-            <Image source={{ uri: userInfo?.avatar }} style={styles.avatar} />
+            <TouchableOpacity onPress={() => RootNavigation.navigate("MainUser")}>
+              <Image source={{ uri: userInfo?.avatar }} style={styles.avatar} />
+            </TouchableOpacity>
             <TouchableOpacity onPress={handleLogout}>
               <Text>Log Out</Text>
             </TouchableOpacity>

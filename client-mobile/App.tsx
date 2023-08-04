@@ -14,6 +14,7 @@ import { navigationRef } from "./components/RootNavigation";
 import ProductList from "./screens/Menu/MenuDetailScreen";
 import DrinkDetail from "./screens/Menu/DrinkDetailScreen";
 import PetDetail from "./screens/Menu/PetDetailScreen";
+import MainUserScreen from "./screens/User/MainUserScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -23,6 +24,7 @@ function HomeStack() {
       <Stack.Screen name="HomeMain" component={HomeScreen} />
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="MainUser" component={MainUserScreen} />
     </Stack.Navigator>
   );
 }
